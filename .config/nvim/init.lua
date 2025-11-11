@@ -82,7 +82,7 @@ vim.o.ignorecase = true
 vim.o.smartcase = true
 
 -- Highlighting goes away after the search
-vim.o.hlsearch = false
+-- vim.o.hlsearch = false
 -- Incremental search
 vim.o.incsearch = true
 
@@ -127,10 +127,16 @@ vim.o.termguicolors = true
 -- Never less than 8 spaces away from top or bottom of screen (unless at bottom of page)
 vim.o.scrolloff = 8
 
+vim.o.smartindent = true
+
 vim.o.colorcolumn = '120'
 
 -- [[ Basic Keymaps ]]
 --  See `:help vim.keymap.set()`
+--
+-- Keeps the search terms in the middle of the page as you search
+vim.keymap.set('n', 'n', 'nzzzv')
+vim.keymap.set('n', 'N', 'Nzzzv')
 
 -- Clear highlights on search when pressing <Esc> in normal mode
 --  See `:help hlsearch`
