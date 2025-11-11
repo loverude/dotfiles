@@ -81,6 +81,11 @@ vim.o.undofile = true
 vim.o.ignorecase = true
 vim.o.smartcase = true
 
+-- Highlighting goes away after the search
+vim.o.hlsearch = false
+-- Incremental search
+vim.o.incsearch = true
+
 -- Keep signcolumn on by default
 vim.o.signcolumn = 'auto:2'
 
@@ -117,7 +122,12 @@ vim.o.scrolloff = 10
 vim.o.confirm = true
 
 --
-vim.o.termguicolors = false
+vim.o.termguicolors = true
+
+-- Never less than 8 spaces away from top or bottom of screen (unless at bottom of page)
+vim.o.scrolloff = 8
+
+vim.o.colorcolumn = '120'
 
 -- [[ Basic Keymaps ]]
 --  See `:help vim.keymap.set()`
