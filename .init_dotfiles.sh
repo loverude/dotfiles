@@ -1,4 +1,4 @@
-tools=("tmux" "nvim" "fzf" "ripgrep" "the_silver_searcher" "zsh" "fd")
+tools=("tmux" "nvim" "fzf" "ripgrep" "the_silver_searcher" "zsh" "fd" "go" "rbenv")
 
 sh -c "$(curl -fsSl http://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 
@@ -38,6 +38,10 @@ for tool in "${tools[@]}"; do
 done
 
 chsh -s $(which zsh)
+
+rbenv install 2.7.6
+rbenv install 3.1.2
+rbenv global 3.1.2
 
 source ~/.zshrc
 tmux source-file ~/.tmux.conf

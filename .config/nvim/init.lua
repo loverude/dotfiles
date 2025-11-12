@@ -224,6 +224,18 @@ require('lazy').setup({
   --
   -- Use `opts = {}` to automatically pass options to a plugin's `setup()` function, forcing the plugin to be loaded.
   --
+  {
+    'nvimdev/indentmini.nvim',
+    config = function()
+      vim.cmd.highlight 'IndentLine guifg=#333333'
+      vim.cmd.highlight 'IndentLineCurrent guifg=#8eb8e1'
+      require('indentmini').setup {
+        exclude = { 'markdown', 'help' },
+        minlevel = 1,
+        only_current = false,
+      }
+    end,
+  },
 
   -- Alternatively, use `config = function() ... end` for full control over the configuration.
   -- If you prefer to call `setup` explicitly, use:
@@ -999,3 +1011,5 @@ require('lazy').setup({
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
+--
+vim.api.nvim_set_hl(0, 'CursorLineNr', { fg = '#FFD700' })
