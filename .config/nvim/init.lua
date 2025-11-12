@@ -44,6 +44,7 @@ vim.g.maplocalleader = ' '
 vim.g.have_nerd_font = false
 
 vim.g.python3_host_prog = '/usr/bin/python3'
+vim.g.vimspector_enable_mappings = 'HUMAN'
 
 -- [[ Setting options ]]
 -- See `:help vim.o`
