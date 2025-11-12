@@ -43,5 +43,8 @@ rbenv install 2.7.6
 rbenv install 3.1.2
 rbenv global 3.1.2
 
+pip3 install neovim
+pip3 install pynvim
+
 source ~/.zshrc
 tmux source-file ~/.tmux.conf
