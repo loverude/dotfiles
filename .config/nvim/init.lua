@@ -1027,3 +1027,5 @@ require('lazy').setup({
 -- vim: ts=2 sts=2 sw=2 et
 --
 vim.api.nvim_set_hl(0, 'CursorLineNr', { fg = '#FFD700' })
+
+vim.api.nvi.set_keymap('n', '<Leader>t', ':InspectTree<CR>', { noremap = true, silent = true })
