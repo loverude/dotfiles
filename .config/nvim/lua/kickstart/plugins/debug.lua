@@ -123,16 +123,39 @@ return {
       },
     }
 
-    -- Change breakpoint icons
+    vim.api.nvim_set_hl(0, 'DapUIPlayPauseNC', { fg = 'lightgreen' })
+    vim.api.nvim_set_hl(0, 'DapUIStepIntoNC', { fg = '#3ea6ff' })
+    vim.api.nvim_set_hl(0, 'DapUIStepOverNC', { fg = '#3ea6ff' })
+    vim.api.nvim_set_hl(0, 'DapUIStepOutNC', { fg = '#3ea6ff' })
+    vim.api.nvim_set_hl(0, 'DapUIStepBackNC', { fg = '#3ea6ff' })
+    vim.api.nvim_set_hl(0, 'DapUIRestartNC', { fg = 'lightgreen' })
+    vim.api.nvim_set_hl(0, 'DapUIStopNC', { fg = '#fa3f4c' })
+
+    vim.api.nvim_set_hl(0, 'DapUIPlayPause', { fg = 'lightgreen' })
+    vim.api.nvim_set_hl(0, 'DapUIStepInto', { fg = '#3ea6ff' })
+    vim.api.nvim_set_hl(0, 'DapUIStepOver', { fg = '#3ea6ff' })
+    vim.api.nvim_set_hl(0, 'DapUIStepOut', { fg = '#3ea6ff' })
+    vim.api.nvim_set_hl(0, 'DapUIStepBack', { fg = '#3ea6ff' })
+    vim.api.nvim_set_hl(0, 'DapUIRestart', { fg = 'lightgreen' })
+    vim.api.nvim_set_hl(0, 'DapUIStop', { fg = '#fa3f4c' })
+
+    vim.api.nvim_set_hl(0, 'winbarNC', { fg = '#333333' })
+    vim.api.nvim_set_hl(0, 'winbar', { fg = '#333333' })
+
     vim.api.nvim_set_hl(0, 'DapBreak', { fg = '#e51400' })
     vim.api.nvim_set_hl(0, 'DapStop', { fg = '#ffcc00' })
+    vim.api.nvim_set_hl(0, 'DapStoppedLine', { bg = '#6ac44c', fg = '#333333' })
+
     local breakpoint_icons = vim.g.have_nerd_font
         and { Breakpoint = '', BreakpointCondition = '', BreakpointRejected = '', LogPoint = '', Stopped = '' }
       or { Breakpoint = '●', BreakpointCondition = '⊜', BreakpointRejected = '⊘', LogPoint = '◆', Stopped = '⭔' }
     for type, icon in pairs(breakpoint_icons) do
       local tp = 'Dap' .. type
-      local hl = (type == 'Stopped') and 'DapStop' or 'DapBreak'
-      vim.fn.sign_define(tp, { text = icon, texthl = hl, numhl = hl })
+      if type == 'Stopped' then
+        vim.fn.sign_define(tp, { text = icon, texthl = 'DapStop', linehl = 'DapStoppedLine', numhl = 'DapStop' })
+      else
+        vim.fn.sign_define(tp, { text = icon, texthl = 'DapBreak', numhl = 'DapBreak' })
+      end
     end
 
     dap.listeners.after.event_initialized['dapui_config'] = dapui.open
