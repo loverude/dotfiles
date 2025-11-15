@@ -43,9 +43,6 @@ vim.g.maplocalleader = ' '
 -- Set to true if you have a Nerd Font installed and selected in the terminal
 vim.g.have_nerd_font = false
 
-vim.g.python3_host_prog = '/usr/bin/python3'
-vim.g.vimspector_enable_mappings = 'HUMAN'
-
 -- [[ Setting options ]]
 -- See `:help vim.o`
 -- NOTE: You can change these options as you wish!
@@ -146,7 +143,36 @@ vim.keymap.set('n', 'N', 'Nzzzv')
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 
 -- Diagnostic keymaps
-vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
+vim.keymap.set('n', '<leader>d', vim.diagnostic.setloclist, { desc = 'Open [d]iagnostic quickfix list' })
+
+vim.keymap.set('n', '<leader>a', ':InspectTree<CR>', { desc = "Toggle [T]reesitter :InspectTree AST" } )
+
+-- Quit
+vim.keymap.set('n', '<leader>q', '<cmd>q<CR>')
+-- Write
+vim.keymap.set('n', '<leader>w', '<cmd>w<CR>')
+
+
+-- Open terminal mode
+vim.keymap.set('n', '<leader>v', '<cmd>terminal<CR>')
+vim.keymap.set('n', '<leader>t', '<cmd>terminal<CR>')
+
+
+vim.keymap.set('t', '<Esc>', '[[<C-\\><C-n>]]', { noremap = true, silent = true })
+
+
+-- Quit
+vim.keymap.set('n', '<leader>q', '<cmd>q<CR>')
+-- Write
+vim.keymap.set('n', '<leader>w', '<cmd>w<CR>')
+
+-- Open terminal mode
+vim.keymap.set('n', '<leader>v', '<cmd>terminal<CR>')
+vim.keymap.set('n', '<leader>t', '<cmd>terminal<CR>')
+
+
+vim.keymap.set('t', '<Esc>', '[[<C-\\><C-n>]]', { noremap = true, silent = true })
+
 
 -- Exit terminal mode in the builtin terminal with a shortcut that is a bit easier
 -- for people to discover. Otherwise, you normally need to press <C-\><C-n>, which
@@ -170,6 +196,27 @@ vim.keymap.set('n', '<C-h>', '<C-w><C-h>', { desc = 'Move focus to the left wind
 vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right window' })
 vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
 vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
+
+-- Make - and | open a horizontal and vertical window split respectively
+vim.keymap.set('n', '<leader>-', '<cmd>split<CR>', { desc = 'Open a horizontal [-] split' })
+vim.keymap.set('n', '<leader>\\', '<cmd>vsplit<CR>', { desc = 'Open a vertical [|] split' })
+
+-- Make h,j,k,l and the leader key able to be used to navigate windows
+vim.keymap.set('n', '<leader>h', '<cmd>wincmd h<CR>', { desc = '[H] Go Left 1 window' })
+vim.keymap.set('n', '<leader>j', '<cmd>wincmd j<CR>', { desc = '[J] Go Right 1 window' })
+vim.keymap.set('n', '<leader>k', '<cmd>wincmd k<CR>', { desc = '[K] Go Up 1 window' })
+vim.keymap.set('n', '<leader>l', '<cmd>wincmd l<CR>', { desc = '[L] Go Down 1 window' })
+
+vim.keymap.set('n', '<leader>c', '<cmd>wincmd c<CR>', { desc = '[C]lose the current window '})
+vim.keymap.set('n', '<leader>x', '<cmd>wincmd c<CR>', { desc = '[x] Close the current window '})
+
+-- Open small terminal with st
+vim.keymap.set("n", "<leader>st", function()
+  vim.cmd.vnew()
+  vim.cmd.term()
+  vim.cmd.wincmd("J")
+  vim.api.nvim_win_set_height(0, 15)
+end)
 
 -- NOTE: Some terminals have colliding keymaps or are not able to send distinct keycodes
 -- vim.keymap.set("n", "<C-S-h>", "<C-w>H", { desc = "Move window to the left" })
@@ -1030,4 +1077,4 @@ require('lazy').setup({
 --
 vim.api.nvim_set_hl(0, 'CursorLineNr', { fg = '#FFD700' })
 
-vim.api.nvi.set_keymap('n', '<Leader>t', ':InspectTree<CR>', { noremap = true, silent = true })
+vim.keymap.set('n', '<leader>t', ':InspectTree<CR>', { desc = 'Toggle [T]reesitter :InspectTree' })
