@@ -145,21 +145,7 @@ vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 -- Diagnostic keymaps
 vim.keymap.set('n', '<leader>d', vim.diagnostic.setloclist, { desc = 'Open [d]iagnostic quickfix list' })
 
-vim.keymap.set('n', '<leader>a', ':InspectTree<CR>', { desc = "Toggle [T]reesitter :InspectTree AST" } )
-
--- Quit
-vim.keymap.set('n', '<leader>q', '<cmd>q<CR>')
--- Write
-vim.keymap.set('n', '<leader>w', '<cmd>w<CR>')
-
-
--- Open terminal mode
-vim.keymap.set('n', '<leader>v', '<cmd>terminal<CR>')
-vim.keymap.set('n', '<leader>t', '<cmd>terminal<CR>')
-
-
-vim.keymap.set('t', '<Esc>', '[[<C-\\><C-n>]]', { noremap = true, silent = true })
-
+vim.keymap.set('n', '<leader>a', ':InspectTree<CR>', { desc = 'Toggle Treesitter :InspectTree [A]ST' })
 
 -- Quit
 vim.keymap.set('n', '<leader>q', '<cmd>q<CR>')
@@ -170,9 +156,18 @@ vim.keymap.set('n', '<leader>w', '<cmd>w<CR>')
 vim.keymap.set('n', '<leader>v', '<cmd>terminal<CR>')
 vim.keymap.set('n', '<leader>t', '<cmd>terminal<CR>')
 
-
 vim.keymap.set('t', '<Esc>', '[[<C-\\><C-n>]]', { noremap = true, silent = true })
 
+-- Quit
+vim.keymap.set('n', '<leader>q', '<cmd>q<CR>')
+-- Write
+vim.keymap.set('n', '<leader>w', '<cmd>w<CR>')
+
+-- Open terminal mode
+vim.keymap.set('n', '<leader>v', '<cmd>terminal<CR>')
+vim.keymap.set('n', '<leader>t', '<cmd>terminal<CR>')
+
+vim.keymap.set('t', '<Esc>', '[[<C-\\><C-n>]]', { noremap = true, silent = true })
 
 -- Exit terminal mode in the builtin terminal with a shortcut that is a bit easier
 -- for people to discover. Otherwise, you normally need to press <C-\><C-n>, which
@@ -207,15 +202,15 @@ vim.keymap.set('n', '<leader>j', '<cmd>wincmd j<CR>', { desc = '[J] Go Right 1 w
 vim.keymap.set('n', '<leader>k', '<cmd>wincmd k<CR>', { desc = '[K] Go Up 1 window' })
 vim.keymap.set('n', '<leader>l', '<cmd>wincmd l<CR>', { desc = '[L] Go Down 1 window' })
 
-vim.keymap.set('n', '<leader>c', '<cmd>wincmd c<CR>', { desc = '[C]lose the current window '})
-vim.keymap.set('n', '<leader>x', '<cmd>wincmd c<CR>', { desc = '[x] Close the current window '})
+vim.keymap.set('n', '<leader>c', '<cmd>wincmd c<CR>', { desc = '[C]lose the current window ' })
+vim.keymap.set('n', '<leader>x', '<cmd>wincmd c<CR>', { desc = '[x] Close the current window ' })
 
 -- Open small terminal with st
-vim.keymap.set("n", "<leader>st", function()
-  vim.cmd.vnew()
-  vim.cmd.term()
-  vim.cmd.wincmd("J")
-  vim.api.nvim_win_set_height(0, 15)
+vim.keymap.set('n', '<leader>st', function()
+  vim.cmd.vnew()
+  vim.cmd.term()
+  vim.cmd.wincmd 'J'
+  vim.api.nvim_win_set_height(0, 15)
 end)
 
 -- NOTE: Some terminals have colliding keymaps or are not able to send distinct keycodes
@@ -283,6 +278,42 @@ require('lazy').setup({
         exclude = { 'markdown', 'help' },
         minlevel = 1,
         only_current = false,
+      }
+    end,
+  },
+
+  {
+    'nvim-lualine/lualine.nvim',
+    config = function()
+      require('lualine').setup {
+        options = {
+          theme = 'onedark',
+          component_separators = '|',
+          section_separators = '',
+          refresh = {
+            statusline = 1000,
+            tabline = 1000,
+            winbar = 1000,
+            refresh_time = 16, -- 60 fps
+            events = {
+              'WinEnter',
+              'BufEnter',
+              'BufWritePost',
+              'SessionLoadPost',
+              'FileChangedShellPost',
+              'VimResized',
+              'CursorMoved',
+              'CursorMovedI',
+              'ModeChanged',
+            },
+          },
+        },
+        sections = {
+          lualine_a = { 'buffers' },
+          lualine_b = { { 'filename', path = 2 } }, -- path = 0 is filename, path = 2 is full path, path = 1 is relative
+          lualine_c = { 'diff' },
+          lualine_x = { 'branch' },
+        },
       }
     end,
   },
@@ -470,23 +501,23 @@ require('lazy').setup({
       local builtin = require 'telescope.builtin'
       vim.keymap.set('n', '<leader>sh', builtin.help_tags, { desc = '[S]earch [H]elp' })
       vim.keymap.set('n', '<leader>sk', builtin.keymaps, { desc = '[S]earch [K]eymaps' })
-      vim.keymap.set('n', '<leader>sf', builtin.find_files, { desc = '[S]earch [F]iles' })
+      vim.keymap.set('n', '<leader>f', builtin.find_files, { desc = 'Search [f]iles' })
       vim.keymap.set('n', '<leader>ss', builtin.builtin, { desc = '[S]earch [S]elect Telescope' })
       vim.keymap.set('n', '<leader>sw', builtin.grep_string, { desc = '[S]earch current [W]ord' })
-      vim.keymap.set('n', '<leader>sg', builtin.live_grep, { desc = '[S]earch by [G]rep' })
+      vim.keymap.set('n', '<leader>g', builtin.live_grep, { desc = 'Search by [G]rep' })
       vim.keymap.set('n', '<leader>sd', builtin.diagnostics, { desc = '[S]earch [D]iagnostics' })
       vim.keymap.set('n', '<leader>sr', builtin.resume, { desc = '[S]earch [R]esume' })
       vim.keymap.set('n', '<leader>s.', builtin.oldfiles, { desc = '[S]earch Recent Files ("." for repeat)' })
       vim.keymap.set('n', '<leader><leader>', builtin.buffers, { desc = '[ ] Find existing buffers' })
 
       -- Slightly advanced example of overriding default behavior and theme
-      vim.keymap.set('n', '<leader>/', function()
+      vim.keymap.set('n', '<leader>.', function()
         -- You can pass additional configuration to Telescope to change the theme, layout, etc.
         builtin.current_buffer_fuzzy_find(require('telescope.themes').get_dropdown {
           winblend = 10,
           previewer = false,
         })
-      end, { desc = '[/] Fuzzily search in current buffer' })
+      end, { desc = '[.] Fuzzily search in current buffer' })
 
       -- It's also possible to pass additional configuration options.
       --  See `:help telescope.builtin.live_grep()` for information about particular keys
@@ -969,24 +1000,21 @@ require('lazy').setup({
       -- Simple and easy statusline.
       --  You could remove this setup call if you don't like it,
       --  and try some other statusline plugin
-      local statusline = require 'mini.statusline'
+      -- local statusline = require 'mini.statusline'
       -- set use_icons to true if you have a Nerd Font
-      statusline.setup { use_icons = vim.g.have_nerd_font }
+      -- statusline.setup { use_icons = vim.g.have_nerd_font }
 
       -- You can configure sections in the statusline by overriding their
       -- default behavior. For example, here we set the section for
       -- cursor location to LINE:COLUMN
       ---@diagnostic disable-next-line: duplicate-set-field
-      statusline.section_location = function()
-        return '%2l:%-2v'
-      end
+      -- statusline.section_location = function()
+      --  return '%2l:%-2v'
+      -- end
 
       -- ... and there is more!
       --  Check out: https://github.com/echasnovski/mini.nvim
     end,
-  },
-  {
-    'puremourning/vimspector',
   },
   { -- Highlight, edit, and navigate code
     'nvim-treesitter/nvim-treesitter',
@@ -1023,6 +1051,16 @@ require('lazy').setup({
         additional_vim_regex_highlighting = { 'ruby' },
       },
       indent = { enable = true, disable = { 'ruby' } },
+      config = function()
+        require('nvim-treesitter-configs').setup {
+          highlight = {
+            enable = true,
+          },
+        }
+        indent = {
+          enable = true,
+        }
+      end,
     },
     -- There are additional nvim-treesitter modules that you can use to interact
     -- with nvim-treesitter. You should go explore a few and see what interests you:
