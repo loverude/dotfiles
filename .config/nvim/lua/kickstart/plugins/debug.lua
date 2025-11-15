@@ -5,6 +5,25 @@
 -- Primarily focused on configuring the debugger for Go, but can
 -- be extended to other languages as well. That's why it's called
 -- kickstart.nvim and not kitchen-sink.nvim ;)
+function prepend_debug_lines_if_not_present()
+  local current_bufnr = vim.api.nvim_get_current_buf()
+  local line1 = "require 'debug/session'"
+  local line2 = "DEBUGGER__.open_tcp(port: 38_698, host: '127.0.0.1')"
+  local firstlines = vim.api.nvim_buf_get_lines(current_bufnr, 0, 2, false)
+  if firstlines[1] ~= line1 and firstlines[2] ~= line2 then
+    vim.api.nvim_buf_set_lines(current_bufnr, 0, 0, false, { line1, line2, '' })
+  end
+end
+
+function remove_debug_lines_if_present()
+  local current_bufnr = vim.api.nvim_get_current_buf()
+  local line1 = "require 'debug/session'"
+  local line2 = "DEBUGGER__.open_tcp(port: 38_698, host: '127.0.0.1')"
+  local firstlines = vim.api.nvim_buf_get_lines(current_bufnr, 0, 2, false)
+  if firstlines[1] == line1 and firstlines[2] == line2 then
+    vim.api.nvim_buf_set_lines(current_bufnr, 0, 3, false, {})
+  end
+end
 
 return {
   -- NOTE: Yes, you can install new plugins here!
@@ -23,42 +42,87 @@ return {
 
     -- Add your own debuggers here
     'leoluz/nvim-dap-go',
-    'suketa/nvim-dap-ruby',
+    'loverude/nvim-dap-ruby',
   },
   keys = {
     -- Basic debugging keymaps, feel free to change to your liking!
     {
-      '<F5>',
+      '<leader>1',
       function()
+        prepend_debug_lines_if_not_present()
         require('dap').continue()
       end,
       desc = 'Debug: Start/Continue',
     },
     {
-      '<F1>',
+      '<leader>1',
+      function()
+        require('dap').run_to_cursor()
+      end,
+      desc = 'Debug: Run to Cursor',
+    },
+    {
+      '<leader>3',
       function()
         require('dap').step_into()
       end,
       desc = 'Debug: Step Into',
     },
     {
-      '<F2>',
+      '<leader>4',
       function()
         require('dap').step_over()
       end,
       desc = 'Debug: Step Over',
     },
     {
-      '<F3>',
+      '<leader>5',
       function()
         require('dap').step_out()
       end,
       desc = 'Debug: Step Out',
     },
     {
+      '<leader>6',
+      function()
+        require('dap').step_back()
+      end,
+      desc = 'Debug: Step Back',
+    },
+    {
+      '<leader>7',
+      function()
+        require('dap').terminate()
+      end,
+      desc = 'Debug: Terminate',
+    },
+    {
+      '<leader>8',
+      function()
+        require('dap').disconnect()
+      end,
+      desc = 'Debug: Disconnect',
+    },
+    {
+      '<leader>9',
+      function()
+        require('dap').close()
+        remove_debug_lines_if_present()
+      end,
+      desc = 'Debug UI: Close UI',
+    },
+    {
+      '<leader>0',
+      function()
+        require('dap').pause()
+      end,
+      desc = 'Debug: Pause',
+    },
+    {
       '<leader>b',
       function()
         require('dap').toggle_breakpoint()
+        prepend_debug_lines_if_not_present()
       end,
       desc = 'Debug: Toggle Breakpoint',
     },
@@ -66,12 +130,13 @@ return {
       '<leader>B',
       function()
         require('dap').set_breakpoint(vim.fn.input 'Breakpoint condition: ')
+        prepend_debug_lines_if_not_present()
       end,
       desc = 'Debug: Set Breakpoint',
     },
     -- Toggle to see last session result. Without this, you can't see session output in case of unhandled exception.
     {
-      '<F7>',
+      '<leader>=',
       function()
         require('dapui').toggle()
       end,
@@ -103,7 +168,28 @@ return {
 
     -- Dap UI setup
     -- For more information, see |:help nvim-dap-ui|
-    dapui.setup {
+    require('dapui').setup {
+      layouts = {
+        {
+          elements = {
+            { id = 'watches', size = 0.2 },
+            { id = 'stacks', size = 0.2 },
+            { id = 'breakpoints', size = 0.2 },
+            { id = 'scopes', size = 0.4 },
+          },
+          size = 40, -- width of 40
+          position = 'left',
+        },
+        {
+          elements = {
+            { id = 'repl', size = 0.5 },
+            { id = 'console', size = 0.5 },
+          },
+          size = 15, -- height of 15
+          position = 'bottom',
+        },
+      },
+
       -- Set icons to characters that are more likely to work in every terminal.
       --    Feel free to remove or use ones that you like more! :)
       --    Don't feel like these are good choices.
@@ -122,6 +208,14 @@ return {
         },
       },
     }
+
+    -- Evaluate a past variable in the debugger just by mousing over it
+    vim.keymap.set('n', '<leader>/', function()
+      require('dapui').eval(nil, { enter = true })
+    end)
+
+    -- Reset debug UI
+    vim.keymap.set('n', '<leader>dr', ":lua require('dapui').open({reset = true})<CR>", { noremap = true })
 
     vim.api.nvim_set_hl(0, 'DapUIPlayPauseNC', { fg = 'lightgreen' })
     vim.api.nvim_set_hl(0, 'DapUIStepIntoNC', { fg = '#3ea6ff' })

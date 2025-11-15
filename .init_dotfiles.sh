@@ -39,9 +39,8 @@ done
 
 chsh -s $(which zsh)
 
-rbenv install 2.7.6
-rbenv install 3.1.2
-rbenv global 3.1.2
+rbenv install 2.7.8
+rbenv global 2.7.8
 
 pip3 install neovim
 pip3 install pynvim
