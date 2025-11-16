@@ -138,6 +138,8 @@ vim.o.colorcolumn = '120'
 vim.keymap.set('n', 'n', 'nzzzv')
 vim.keymap.set('n', 'N', 'Nzzzv')
 
+vim.keymap.set('n', '<leader>p', '<cmd>TimerlyToggle<CR>')
+
 -- Clear highlights on search when pressing <Esc> in normal mode
 --  See `:help hlsearch`
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
@@ -148,9 +150,9 @@ vim.keymap.set('n', '<leader>d', vim.diagnostic.setloclist, { desc = 'Open [d]ia
 vim.keymap.set('n', '<leader>a', ':InspectTree<CR>', { desc = 'Toggle Treesitter :InspectTree [A]ST' })
 
 -- Quit
-vim.keymap.set('n', '<leader>q', '<cmd>q<CR>')
+vim.keymap.set('n', '<leader>q', '<cmd>q<CR>', { desc = '[Q]uit window' })
 -- Write
-vim.keymap.set('n', '<leader>w', '<cmd>w<CR>')
+vim.keymap.set('n', '<leader>w', '<cmd>w<CR>', { desc = '[W]rite buffer' })
 
 -- Open terminal mode
 vim.keymap.set('n', '<leader>v', '<cmd>terminal<CR>')
@@ -280,6 +282,13 @@ require('lazy').setup({
         only_current = false,
       }
     end,
+  },
+
+  {
+    'nvzone/timerly',
+    dependencies = 'nvzone/volt',
+    cmd = 'TimerlyToggle',
+    opts = {},
   },
 
   {
@@ -816,12 +825,12 @@ require('lazy').setup({
     cmd = { 'ConformInfo' },
     keys = {
       {
-        '<leader>f',
+        '<leader>af',
         function()
           require('conform').format { async = true, lsp_format = 'fallback' }
         end,
         mode = '',
-        desc = '[F]ormat buffer',
+        desc = '[A]uto [F]ormat buffer',
       },
     },
     opts = {
@@ -1114,5 +1123,3 @@ require('lazy').setup({
 -- vim: ts=2 sts=2 sw=2 et
 --
 vim.api.nvim_set_hl(0, 'CursorLineNr', { fg = '#FFD700' })
-
-vim.keymap.set('n', '<leader>t', ':InspectTree<CR>', { desc = 'Toggle [T]reesitter :InspectTree' })
