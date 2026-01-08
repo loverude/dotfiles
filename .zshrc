@@ -109,7 +109,7 @@ if command -v tmux &> /dev/null && [ -z "$TMUX" ]; then
   tmux -f .tmux.conf
 fi
 
-eval "$rbenv init - zsh)"
+# eval "$rbenv init - zsh)"
 
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
-export PATH="$PATH:$HOME/.rvm/bin"
+#export PATH="$PATH:$HOME/.rvm/bin"
