@@ -1029,24 +1029,25 @@ require('lazy').setup({
     'nvim-treesitter/nvim-treesitter',
     build = ':TSUpdate',
     config = function()
-      -- Install parsers
-      require('nvim-treesitter').install {
-        'bash',
-        'c',
-        'diff',
-        'html',
-        'lua',
-        'luadoc',
-        'markdown',
-        'markdown_inline',
-        'query',
-        'vim',
-        'vimdoc',
-        'ruby',
-        'java',
-        'python',
-        'rust',
-        'cpp',
+      require('nvim-treesitter.configs').setup {
+        ensure_installed = {
+          'bash',
+          'c',
+          'diff',
+          'html',
+          'lua',
+          'luadoc',
+          'markdown',
+          'markdown_inline',
+          'query',
+          'vim',
+          'vimdoc',
+          'ruby',
+          'java',
+          'python',
+          'rust',
+          'cpp',
+        },
       }
     end,
     -- There are additional nvim-treesitter modules that you can use to interact
