@@ -1,0 +1,18 @@
+{
+  "model": "sonnet[1m]",
+  "attribution": {
+    "commit": "",
+    "pr": ""
+  },
+  "enabledPlugins": {
+    "swift-lsp@claude-plugins-official": true
+  },
+  "effortLevel": "xhigh",
+  "voice": {
+    "enabled": true,
+    "mode": "tap"
+  },
+  "theme": "dark",
+  "voiceEnabled": true,
+  "agentPushNotifEnabled": true
+}
