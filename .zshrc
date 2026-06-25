@@ -1,7 +1,9 @@
 alias s="git status"
 alias vim="nvim"
 alias v="nvim"
-alias b="bssh"
+alias oc="oc"
+alias claude='claude --remote-control'
+alias c="claude"
 
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
@@ -121,3 +123,9 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
 
 cd ~/git
+export PATH="$HOME/.local/bin:$PATH"
+
+# Added by LM Studio CLI (lms)
+export PATH="$PATH:/Users/jasperloverude/.lmstudio/bin"
+# End of LM Studio CLI section
+
