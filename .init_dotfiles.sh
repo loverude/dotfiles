@@ -1,6 +1,6 @@
 tools=("tmux" "nvim" "fzf" "ripgrep" "the_silver_searcher" "zsh" "fd" "go" "rbenv")
 
-sh -c "$(curl -fsSl http://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+RUNZSH=no CHSH=no KEEP_ZSHRC=yes sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 
 if [[ "$OSTYPE" == "darwin"* ]]; then
     echo "This is macOS. Installing with brew"

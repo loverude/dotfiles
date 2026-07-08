@@ -4,6 +4,7 @@ alias v="nvim"
 alias oc="oc"
 alias claude='claude --remote-control'
 alias c="claude"
+alias dotfiles='git --git-dir=$HOME/.dotfiles --work-tree=$HOME'
 
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
@@ -109,7 +110,7 @@ source $ZSH/oh-my-zsh.sh
 export PATH="/usr/local/sbin:$PATH"
 
 if command -v tmux &> /dev/null && [ -z "$TMUX" ]; then
-  tmux -f .tmux.conf
+  tmux -f ~/.tmux.conf
 fi
 
 # Linux Changes

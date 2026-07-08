@@ -1,20 +1,10 @@
 {
-  "model": "sonnet[1m]",
   "attribution": {
     "commit": "",
-    "pr": ""
+    "pr": "",
+    "sessionUrl": false
   },
-  "enabledPlugins": {
-    "swift-lsp@claude-plugins-official": true
-  },
-  "effortLevel": "xhigh",
-  "voice": {
-    "enabled": true,
-    "mode": "tap"
-  },
-  "theme": "dark",
-  "voiceEnabled": true,
-  "agentPushNotifEnabled": true,
+  "model": "fable",
   "hooks": {
     "Stop": [
       {
@@ -26,5 +16,17 @@
         ]
       }
     ]
-  }
+  },
+  "enabledPlugins": {
+    "swift-lsp@claude-plugins-official": true
+  },
+  "effortLevel": "xhigh",
+  "voice": {
+    "enabled": true,
+    "mode": "tap"
+  },
+  "theme": "dark",
+  "inputNeededNotifEnabled": true,
+  "agentPushNotifEnabled": true,
+  "voiceEnabled": true
 }
